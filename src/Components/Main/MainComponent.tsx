@@ -7,6 +7,7 @@ import {
   initStoreOrgs,
   updatedStoreOrgs,
 } from '../../Interfaces/SearchInterfaces';
+import ErrorSearch from '../ErrorSearch';
 
 export interface Organisations {
   org_name: string;
@@ -43,21 +44,26 @@ function MainComponent() {
   return (
     <Group justify="center" p="md">
       {Array.isArray(selectorUpdatedOrgsData) &&
-      selectorUpdatedOrgsData.length === 0
-        ? selectorInitOrgsData.map((org) => (
-            <OrgCard
-              org_name={org.org_name}
-              org_type={org.org_type}
-              key={org.org_name}
-            />
-          ))
-        : selectorUpdatedOrgsData.map((org) => (
-            <OrgCard
-              org_name={org.org_name}
-              org_type={org.org_type}
-              key={org.org_name}
-            />
-          ))}
+      selectorUpdatedOrgsData.length === 0 ? (
+        selectorInitOrgsData.map((org) => (
+          <OrgCard
+            org_name={org.org_name}
+            org_type={org.org_type}
+            key={org.org_name}
+          />
+        ))
+      ) : selectorUpdatedOrgsData.length === 1 &&
+        selectorUpdatedOrgsData[0].org_name === '' ? (
+        <ErrorSearch />
+      ) : (
+        selectorUpdatedOrgsData.map((org) => (
+          <OrgCard
+            org_name={org.org_name}
+            org_type={org.org_type}
+            key={org.org_name}
+          />
+        ))
+      )}
     </Group>
   );
 }

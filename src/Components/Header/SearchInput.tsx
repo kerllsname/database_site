@@ -10,7 +10,7 @@ import { initStoreOrgs } from '../../Interfaces/SearchInterfaces';
 function SearchInputComponent() {
   const theme = useMantineTheme();
   const dispatch = useDispatch();
-  const [searchValue, setValue] = useState('');
+  // const [searchValue, setValue] = useState('');
   const [orgsData, updateOrgsData] = useState<Organisations[]>([]);
   const selectorOrgsData = useSelector(
     (state: initStoreOrgs) => state.initOrgs.initOrgs,
@@ -20,15 +20,35 @@ function SearchInputComponent() {
     updateOrgsData(selectorOrgsData);
   }, [selectorOrgsData]);
 
-  const filteredValues = orgsData.filter((org) =>
-    org.org_name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
-  );
+  const emptyArr = [
+    {
+      org_name: '',
+      org_type: '',
+      web_site: '',
+      director: '',
+      phone_number: '',
+      org_structure: '',
+      org_id: 0,
+    },
+  ];
 
-  dispatch(updatedOrgs(filteredValues));
+  function searchHandler(searchValue: string) {
+    const filteredValues = orgsData.filter((org) =>
+      org.org_name
+        .toLocaleLowerCase()
+        .includes(searchValue.toLocaleLowerCase()),
+    );
+
+    if (filteredValues.length === 0) {
+      dispatch(updatedOrgs(emptyArr));
+    } else {
+      dispatch(updatedOrgs(filteredValues));
+    }
+  }
 
   return (
     <TextInput
-      onChange={(event) => setValue(event.target.value)}
+      onChange={(event) => searchHandler(event.target.value)}
       radius="xl"
       size="md"
       placeholder="Поиск"
