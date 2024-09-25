@@ -9,10 +9,10 @@ import {
 } from '../../Interfaces/SearchInterfaces';
 import ErrorSearch from '../ErrorSearch';
 
-export interface Organisations {
+export interface Organisation {
   org_name: string;
   org_type: string;
-  web_site: string;
+  website: string;
   director: string;
   phone_number: string;
   org_structure: string;
@@ -46,22 +46,14 @@ function MainComponent() {
       {Array.isArray(selectorUpdatedOrgsData) &&
       selectorUpdatedOrgsData.length === 0 ? (
         selectorInitOrgsData.map((org) => (
-          <OrgCard
-            org_name={org.org_name}
-            org_type={org.org_type}
-            key={org.org_name}
-          />
+          <OrgCard org_data={org} key={org.org_name} />
         ))
       ) : selectorUpdatedOrgsData.length === 1 &&
         selectorUpdatedOrgsData[0].org_name === '' ? (
         <ErrorSearch />
       ) : (
         selectorUpdatedOrgsData.map((org) => (
-          <OrgCard
-            org_name={org.org_name}
-            org_type={org.org_type}
-            key={org.org_name}
-          />
+          <OrgCard org_data={org} key={org.org_name} />
         ))
       )}
     </Group>

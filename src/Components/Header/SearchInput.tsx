@@ -1,17 +1,15 @@
 'use client';
-import { ActionIcon, rem, TextInput, useMantineTheme } from '@mantine/core';
-import { IconArrowRight, IconSearch } from '@tabler/icons-react';
+import { rem, TextInput } from '@mantine/core';
+import { IconSearch } from '@tabler/icons-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Organisations } from '../Main/MainComponent';
+import { Organisation } from '../Main/MainComponent';
 import { useEffect, useState } from 'react';
 import { updatedOrgs } from '../../store/updatedOrgsSlice';
 import { initStoreOrgs } from '../../Interfaces/SearchInterfaces';
 
 function SearchInputComponent() {
-  const theme = useMantineTheme();
   const dispatch = useDispatch();
-  // const [searchValue, setValue] = useState('');
-  const [orgsData, updateOrgsData] = useState<Organisations[]>([]);
+  const [orgsData, updateOrgsData] = useState<Organisation[]>([]);
   const selectorOrgsData = useSelector(
     (state: initStoreOrgs) => state.initOrgs.initOrgs,
   );
@@ -52,23 +50,9 @@ function SearchInputComponent() {
       radius="xl"
       size="md"
       placeholder="Поиск"
-      rightSectionWidth={42}
-      w={800}
+      w={700}
       leftSection={
         <IconSearch style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
-      }
-      rightSection={
-        <ActionIcon
-          size={32}
-          radius="xl"
-          color={theme.primaryColor}
-          variant="filled"
-        >
-          <IconArrowRight
-            style={{ width: rem(18), height: rem(18) }}
-            stroke={1.5}
-          />
-        </ActionIcon>
       }
     />
   );

@@ -1,13 +1,13 @@
-import { Organisations } from '../Components/Main/MainComponent';
+import { Organisation } from '../Components/Main/MainComponent';
 
 export interface initStoreOrgs {
   initOrgs: {
-    initOrgs: Organisations[];
+    initOrgs: Organisation[];
   };
 }
 
 export interface updatedStoreOrgs {
   updatedOrgs: {
-    updatedOrgs: Organisations[];
+    updatedOrgs: Organisation[];
   };
 }
