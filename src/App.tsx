@@ -1,12 +1,20 @@
-import "@mantine/core/styles.css";
+import '@mantine/core/styles.css';
 
-import { MantineProvider } from "@mantine/core";
-import HomePageComponent from "./Components/Homepage";
+import { AppShell, MantineProvider } from '@mantine/core';
+import HeaderComponent from './Components/Header/Header';
+import MainComponent from './Components/Main/Main';
 
 function App() {
   return (
-    <MantineProvider>
-      <HomePageComponent />
+    <MantineProvider defaultColorScheme="dark">
+      <AppShell header={{ height: 70 }}>
+        <AppShell.Header>
+          <HeaderComponent />
+        </AppShell.Header>
+        <AppShell.Main>
+          <MainComponent />
+        </AppShell.Main>
+      </AppShell>
     </MantineProvider>
   );
 }
