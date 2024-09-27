@@ -32,7 +32,16 @@ function OrgCard(props: { org_data: Organisation }) {
           <Text>Тип организации: {props.org_data.org_type}</Text>
           <Text>
             Сайт организации:
-            <a href={props.org_data.website}>{props.org_data.website}</a>
+            <a
+              href={
+                props.org_data.website.includes('http')
+                  ? props.org_data.website
+                  : '//' + props.org_data.website
+              }
+              target="_blank"
+            >
+              {props.org_data.website}
+            </a>
           </Text>
           <Text>Директор организации: {props.org_data.director}</Text>
           <Text>Телефон организации: {props.org_data.phone_number}</Text>
