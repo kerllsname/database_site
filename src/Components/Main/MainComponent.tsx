@@ -7,6 +7,7 @@ import {
 } from '../../Interfaces/SearchInterfaces';
 import ErrorSearch from '../ErrorSearch';
 import CardsDefaultListComponent from './CardsGroup';
+import DataJSON from '../../data/data.json';
 
 export interface Organisation {
   id: number;
@@ -35,9 +36,10 @@ function MainComponent() {
   );
 
   const getApiData = async () => {
-    const response = await fetch(
-      'http://192.168.92.252:8000/api/orgdata/',
-    ).then((response) => response.json());
+    // const response = await fetch('../../data/data.json').then((response) =>
+    //   response.json(),
+    // );
+    const response = DataJSON;
 
     dispatch(addOrg(response));
   };

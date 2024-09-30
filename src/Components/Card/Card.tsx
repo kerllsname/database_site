@@ -14,6 +14,7 @@ function OrgCard(props: { org_data: Organisation }) {
         padding="xs"
         onClick={open}
         style={{ cursor: 'pointer' }}
+        withBorder
       >
         <Stack align="flex-start" justify="space-between" h="150">
           <Text fw={600}>{props.org_data.org_name}</Text>
