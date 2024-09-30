@@ -1,10 +1,10 @@
-import { Container, Text } from '@mantine/core';
+import { Flex, Text } from '@mantine/core';
 
 function ErrorSearch() {
   return (
-    <Container>
+    <Flex justify="center" align="center" m="md">
       <Text size="lg">Ничего нет</Text>
-    </Container>
+    </Flex>
   );
 }
 

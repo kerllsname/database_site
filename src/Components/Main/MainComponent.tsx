@@ -1,6 +1,4 @@
-import { Group } from '@mantine/core';
 import { useEffect } from 'react';
-import OrgCard from '../Card/Card';
 import { useDispatch, useSelector } from 'react-redux';
 import { addOrg } from '../../store/initOrgsSlice';
 import {
@@ -8,15 +6,22 @@ import {
   updatedStoreOrgs,
 } from '../../Interfaces/SearchInterfaces';
 import ErrorSearch from '../ErrorSearch';
+import CardsDefaultListComponent from './CardsGroup';
 
 export interface Organisation {
+  id: number;
   org_name: string;
   org_type: string;
   website: string;
   director: string;
   phone_number: string;
   org_structure: string;
-  org_id: number;
+  activity_type: string;
+  parent: {
+    id: number;
+    org_name: string;
+    org_type: string;
+  };
 }
 
 function MainComponent() {
@@ -41,23 +46,17 @@ function MainComponent() {
     getApiData();
   }, []);
 
-  return (
-    <Group justify="center" p="md">
-      {Array.isArray(selectorUpdatedOrgsData) &&
-      selectorUpdatedOrgsData.length === 0 ? (
-        selectorInitOrgsData.map((org) => (
-          <OrgCard org_data={org} key={org.org_name} />
-        ))
-      ) : selectorUpdatedOrgsData.length === 1 &&
-        selectorUpdatedOrgsData[0].org_name === '' ? (
-        <ErrorSearch />
-      ) : (
-        selectorUpdatedOrgsData.map((org) => (
-          <OrgCard org_data={org} key={org.org_name} />
-        ))
-      )}
-    </Group>
-  );
+  function isSearchActive(initArr: Organisation[], searchArr: Organisation[]) {
+    if (Array.isArray(searchArr) && searchArr.length === 0)
+      return <CardsDefaultListComponent orgs={initArr} />;
+    else if (searchArr.length === 1 && searchArr[0].org_name === '')
+      return <ErrorSearch />;
+    else {
+      return <CardsDefaultListComponent orgs={searchArr} />;
+    }
+  }
+
+  return isSearchActive(selectorInitOrgsData, selectorUpdatedOrgsData);
 }
 
 export default MainComponent;
