@@ -7,7 +7,8 @@ import {
 } from '../../Interfaces/SearchInterfaces';
 import ErrorSearch from '../ErrorSearch';
 import CardsDefaultListComponent from './CardsGroup';
-import DataJSON from '../../data/data.json';
+import InputSelect from './InputSelect';
+import { Flex } from '@mantine/core';
 
 export interface Organisation {
   id: number;
@@ -35,18 +36,17 @@ function MainComponent() {
     (state: updatedStoreOrgs) => state.updatedOrgs.updatedOrgs,
   );
 
-  const getApiData = async () => {
-    // const response = await fetch('../../data/data.json').then((response) =>
-    //   response.json(),
-    // );
-    const response = DataJSON;
-
-    dispatch(addOrg(response));
-  };
-
   useEffect(() => {
+    const getApiData = async () => {
+      const response: Organisation[] = await fetch(
+        'http://192.168.92.252:8000/api/orgdata/',
+      ).then((response) => response.json());
+
+      dispatch(addOrg(response));
+    };
+
     getApiData();
-  }, []);
+  }, [dispatch]);
 
   function isSearchActive(initArr: Organisation[], searchArr: Organisation[]) {
     if (Array.isArray(searchArr) && searchArr.length === 0)
@@ -58,7 +58,14 @@ function MainComponent() {
     }
   }
 
-  return isSearchActive(selectorInitOrgsData, selectorUpdatedOrgsData);
+  return (
+    <Flex align="center" justify="center" p="md" direction="column">
+      <InputSelect />
+      {selectorInitOrgsData.length != 0
+        ? isSearchActive(selectorInitOrgsData, selectorUpdatedOrgsData)
+        : null}
+    </Flex>
+  );
 }
 
 export default MainComponent;

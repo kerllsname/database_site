@@ -2,26 +2,31 @@ import { Card, Stack, Text, Modal, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Organisation } from '../Main/MainComponent';
 
-function OrgCard(props: { org_data: Organisation }) {
+function OrgCard(props: { org_data: Organisation; showForm: string }) {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
       <Card
         w={400}
-        h={150}
         radius={5}
         padding="xs"
         onClick={open}
         style={{ cursor: 'pointer' }}
         withBorder
       >
-        <Stack align="flex-start" justify="space-between" h="150">
-          <Text fw={600}>{props.org_data.org_name}</Text>
-          <Text c="dimmed" size="small">
-            {props.org_data.org_type}
+        {props.showForm != 'type' ? (
+          <Stack align="flex-start" justify="space-between" h={150}>
+            <Text fw={600}>{props.org_data.org_name}</Text>
+            <Text c="dimmed" size="small">
+              {props.org_data.org_type}
+            </Text>
+          </Stack>
+        ) : (
+          <Text h={75} fw={600}>
+            {props.org_data.org_name}
           </Text>
-        </Stack>
+        )}
       </Card>
       <Modal
         opened={opened}
