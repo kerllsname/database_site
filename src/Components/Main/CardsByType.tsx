@@ -2,7 +2,7 @@ import { Box, Divider, Flex, Group, Title } from '@mantine/core';
 import { Organisation } from './MainComponent';
 import OrgCard from '../Card/Card';
 
-function CardsDefaultListComponent(props: { orgs: Organisation[] }) {
+function CardsByTypeComponent(props: { orgs: Organisation[] }) {
   const orgsTypesSet = new Set<string>();
 
   for (let x = 0; x < props.orgs.length; x++) {
@@ -16,7 +16,9 @@ function CardsDefaultListComponent(props: { orgs: Organisation[] }) {
       {orgTypesArr.map((uniqOrgType) => {
         return (
           <Box key={uniqOrgType}>
-            <Title order={2}>{uniqOrgType}</Title>
+            <Title order={2}>
+              {uniqOrgType.charAt(0).toUpperCase() + uniqOrgType.slice(1)}
+            </Title>
             <Group mt="md">
               {props.orgs.map((org) => {
                 if (org.org_type === uniqOrgType)
@@ -33,4 +35,4 @@ function CardsDefaultListComponent(props: { orgs: Organisation[] }) {
   );
 }
 
-export default CardsDefaultListComponent;
+export default CardsByTypeComponent;

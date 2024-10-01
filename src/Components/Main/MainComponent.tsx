@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addOrg } from '../../store/initOrgsSlice';
 import {
@@ -6,9 +6,9 @@ import {
   updatedStoreOrgs,
 } from '../../Interfaces/SearchInterfaces';
 import ErrorSearch from '../ErrorSearch';
-import CardsDefaultListComponent from './CardsGroup';
 import InputSelect from './InputSelect';
-import { Flex } from '@mantine/core';
+import { Center, Container } from '@mantine/core';
+import ShowCards from './Cards';
 
 export interface Organisation {
   id: number;
@@ -28,6 +28,7 @@ export interface Organisation {
 
 function MainComponent() {
   const dispatch = useDispatch();
+  const [selectedValue, setSelectedValue] = useState('type');
 
   const selectorInitOrgsData = useSelector(
     (state: initStoreOrgs) => state.initOrgs.initOrgs,
@@ -50,21 +51,24 @@ function MainComponent() {
 
   function isSearchActive(initArr: Organisation[], searchArr: Organisation[]) {
     if (Array.isArray(searchArr) && searchArr.length === 0)
-      return <CardsDefaultListComponent orgs={initArr} />;
+      return <ShowCards selectedValue={selectedValue} data={initArr} />;
     else if (searchArr.length === 1 && searchArr[0].org_name === '')
       return <ErrorSearch />;
     else {
-      return <CardsDefaultListComponent orgs={searchArr} />;
+      return <ShowCards selectedValue={selectedValue} data={searchArr} />;
     }
   }
 
   return (
-    <Flex align="center" justify="center" p="md" direction="column">
-      <InputSelect />
+    <Container p="md" fluid>
+      <Center>
+        <InputSelect handleChange={setSelectedValue} />
+      </Center>
+
       {selectorInitOrgsData.length != 0
         ? isSearchActive(selectorInitOrgsData, selectorUpdatedOrgsData)
         : null}
-    </Flex>
+    </Container>
   );
 }
 

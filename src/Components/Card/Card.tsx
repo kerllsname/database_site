@@ -1,4 +1,4 @@
-import { Card, Stack, Text, Modal, Flex } from '@mantine/core';
+import { Card, Text, Modal, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Organisation } from '../Main/MainComponent';
 
@@ -15,18 +15,9 @@ function OrgCard(props: { org_data: Organisation; showForm: string }) {
         style={{ cursor: 'pointer' }}
         withBorder
       >
-        {props.showForm != 'type' ? (
-          <Stack align="flex-start" justify="space-between" h={150}>
-            <Text fw={600}>{props.org_data.org_name}</Text>
-            <Text c="dimmed" size="small">
-              {props.org_data.org_type}
-            </Text>
-          </Stack>
-        ) : (
-          <Text h={75} fw={600}>
-            {props.org_data.org_name}
-          </Text>
-        )}
+        <Text h={75} fw={600}>
+          {props.org_data.org_name}
+        </Text>
       </Card>
       <Modal
         opened={opened}
@@ -36,8 +27,9 @@ function OrgCard(props: { org_data: Organisation; showForm: string }) {
       >
         <Flex direction="column">
           <Text>Тип организации: {props.org_data.org_type}</Text>
+          <Text>Отделение организации: {props.org_data.org_structure}</Text>
           <Text>
-            Сайт организации:
+            Сайт организации:&nbsp;
             <a
               href={
                 props.org_data.website.includes('http')
