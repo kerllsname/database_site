@@ -19,6 +19,7 @@ export interface Organisation {
   phone_number: string;
   org_structure: string;
   activity_type: string;
+  child: boolean;
   parent: {
     id: number;
     org_name: string;
@@ -40,7 +41,7 @@ function MainComponent() {
   useEffect(() => {
     const getApiData = async () => {
       const response: Organisation[] = await fetch(
-        'http://192.168.92.252:8000/api/orgdata/',
+        'http://192.168.92.252:8000/api/all/',
       ).then((response) => response.json());
 
       dispatch(addOrg(response));
@@ -51,11 +52,25 @@ function MainComponent() {
 
   function isSearchActive(initArr: Organisation[], searchArr: Organisation[]) {
     if (Array.isArray(searchArr) && searchArr.length === 0)
-      return <ShowCards selectedValue={selectedValue} data={initArr} />;
+      return (
+        <ShowCards
+          selectedValue={selectedValue}
+          isSearchActive={false}
+          initOrgs={initArr}
+          updatedOrgs={searchArr}
+        />
+      );
     else if (searchArr.length === 1 && searchArr[0].org_name === '')
       return <ErrorSearch />;
     else {
-      return <ShowCards selectedValue={selectedValue} data={searchArr} />;
+      return (
+        <ShowCards
+          selectedValue={selectedValue}
+          isSearchActive={true}
+          initOrgs={initArr}
+          updatedOrgs={searchArr}
+        />
+      );
     }
   }
 

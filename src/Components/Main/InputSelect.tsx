@@ -8,7 +8,7 @@ function InputSelect(props: { handleChange: (value: string) => void }) {
       data={[
         { label: 'По типу', value: 'type' },
         { label: 'По отделению', value: 'department' },
-        { label: 'По подчинению', value: 'own' },
+        { label: 'По подчинению', value: 'parent' },
       ]}
       w={300}
       radius={10}
